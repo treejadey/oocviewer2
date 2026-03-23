@@ -45,19 +45,64 @@ class Message extends HTMLElement {
         const dateText = dateTimeFormat.format(dateObj);
 
         const message = document.createElement("div");
+        message.setAttribute("class", "msg")
 
         message.innerHTML = /*html*/`
             <div class="msg-id">#${id}</div>
             <time datetime="${date}">${dateText}</time>
         `
 
-        let textDiv = document.createElement("div");
-        textDiv.setAttribute("class", "msg-text");
+        let textParagraph = document.createElement("p");
+        textParagraph.setAttribute("class", "msg-text");
 
-        turnTextIntoLinksInAStringAndAddToElement(text, textDiv);
+        turnTextIntoLinksInAStringAndAddToElement(text, textParagraph);
 
-        message.append(textDiv)
+        message.append(textParagraph)
 
+        const addedByDiv = document.createElement("div");
+        addedByDiv.setAttribute("class", "msg-addedby");
+
+        addedByDiv.innerHTML = /*html*/`
+            <span class="adder">Added by: </span><span class="adder-name">${addedBy}</span>
+        `
+
+        message.append(addedByDiv)
+
+        const styles = document.createElement("style");
+
+        styles.innerText = /*css*/`
+        .msg {
+            background-color: light-dark(#e8e8e8, #292929);
+            padding: 0.35rem;
+            overflow-wrap: wrap-word;
+        }
+
+        .msg-id {
+            display: inline;
+            margin-right: 4px;
+        }
+        
+        time {
+            display: inline;
+            margin-right: 4px;
+        }
+
+        .msg-text {
+            display: inline;
+            color: light-dark(#2c2c2c, #c0c0c0);
+        }
+
+        .msg-addedby {
+            display: block;
+            margin-top: 4px;
+        }
+        
+        .adder-name {
+            font-weight: 600;
+        }
+        
+        `
+        this.shadowRoot.append(styles)
         this.shadowRoot.append(message)
     }
 }
@@ -73,6 +118,23 @@ class Messages extends HTMLElement {
         const link = this.getAttribute("link");
         const textMessage = document.createElement("p");
         this.shadowRoot.append(textMessage)
+
+        const styles = document.createElement("style");
+
+        styles.innerText = `
+        ul {
+            padding-left: 0;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        ul li {
+            list-style: none;
+        }
+        `
+        this.shadowRoot.append(styles)
 
         let data;
         try {
