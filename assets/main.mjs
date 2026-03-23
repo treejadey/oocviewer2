@@ -74,7 +74,7 @@ class Message extends HTMLElement {
         .msg {
             background-color: light-dark(#e8e8e8, #292929);
             padding: 0.35rem;
-            overflow-wrap: wrap-word;
+            overflow-wrap: break-word;
         }
 
         .msg-id {
@@ -95,6 +95,8 @@ class Message extends HTMLElement {
         .msg-addedby {
             display: block;
             margin-top: 4px;
+
+            font-size: 12px;
         }
         
         .adder-name {

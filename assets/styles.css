@@ -10,7 +10,7 @@ main {
     width: 58%;
     margin: auto;
 
-    margin-top: 15rem;
+    margin-top: 10rem;
     padding-bottom: 4rem;
 
 }
@@ -19,7 +19,7 @@ body {
     background-color: light-dark(#f5f5f5, #1f1f1f);
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1000px) {
   main {
     width: 93%;
 
