@@ -47,10 +47,15 @@ class Message extends HTMLElement {
         const message = document.createElement("div");
         message.setAttribute("class", "msg")
 
-        message.innerHTML = /*html*/`
-            <div class="msg-id">#${id}</div>
-            <time datetime="${date}">${dateText}</time>
-        `
+        const msgIdDiv = document.createElement("div")
+        msgIdDiv.setAttribute("class", "msg-id");
+        msgIdDiv.innerText = id;
+
+        const timeElement = document.createElement("time")
+        timeElement.setAttribute("datetime", date)
+        timeElement.innerText = dateText
+
+        message.append(msgIdDiv, timeElement)
 
         let textParagraph = document.createElement("p");
         textParagraph.setAttribute("class", "msg-text");
@@ -62,9 +67,14 @@ class Message extends HTMLElement {
         const addedByDiv = document.createElement("div");
         addedByDiv.setAttribute("class", "msg-addedby");
 
-        addedByDiv.innerHTML = /*html*/`
-            <span class="adder">Added by: </span><span class="adder-name">${addedBy}</span>
-        `
+        const adder = document.createElement("span")
+        adder.setAttribute("class", "adder-name")
+        adder.appendChild(document.createTextNode(addedBy))
+
+        const addPlaceholder = document.createElement("span")
+        addPlaceholder.innerText = "Added by: "
+
+        addedByDiv.append(addPlaceholder, adder)
 
         message.append(addedByDiv)
 
