@@ -128,7 +128,7 @@ class Messages extends HTMLElement {
             padding-left: 0;
 
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             gap: 0.5rem;
         }
 
@@ -186,28 +186,30 @@ const q = urlParams.get("q");
 const errorMessage = document.getElementById("errorMessage");
 
 if (q == null || q === "") {
-    errorMessage.innerText = "No query parameter is defined!"
-}
+    errorMessage.innerText = "No query parameter is defined!\n Add ?q=[link to a raw hastebin with ooc messages] to the end of the url."
+} else {
+    let potentialUrl;
+    try {
+        potentialUrl = new URL(q);
+    } catch (err) {
 
-let potentialUrl;
-try {
-    potentialUrl = new URL(q);
-} catch (err) {
+        if (err instanceof TypeError) {
+            errorMessage.innerText =
+                "Couldn't parse the q query parameter as a URL? Is it an actual url?"
+        } else {
+            errorMessage.innerText = err.message
+        }
 
-    if (err instanceof TypeError) {
-        errorMessage.innerText =
-            "Couldn't parse the q query parameter as a URL? Is it an actual url?"
-    } else {
-        errorMessage.innerText = err.message
+    }
+
+    if (potentialUrl != null) {
+        const main = document.getElementById("main")
+
+        const messages = document.createElement("ooc-messages")
+        messages.setAttribute("link", potentialUrl)
+
+        main.appendChild(messages);
     }
 
 }
 
-if (potentialUrl != null) {
-    const main = document.getElementById("main")
-
-    const messages = document.createElement("ooc-messages")
-    messages.setAttribute("link", potentialUrl)
-
-    main.appendChild(messages);
-}
