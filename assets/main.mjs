@@ -49,13 +49,17 @@ class Message extends HTMLElement {
 
         const msgIdDiv = document.createElement("div")
         msgIdDiv.setAttribute("class", "msg-id");
-        msgIdDiv.innerText = id;
+        msgIdDiv.innerText = `#${id}`;
 
         const timeElement = document.createElement("time")
         timeElement.setAttribute("datetime", date)
         timeElement.innerText = dateText
 
-        message.append(msgIdDiv, timeElement)
+        const metadataDiv = document.createElement("div")
+        metadataDiv.setAttribute("class", "msg-metadata")
+        metadataDiv.append(msgIdDiv, timeElement)
+
+        message.append(metadataDiv)
 
         let textParagraph = document.createElement("p");
         textParagraph.setAttribute("class", "msg-text");
@@ -82,34 +86,37 @@ class Message extends HTMLElement {
 
         styles.innerText = /*css*/`
         .msg {
-            background-color: light-dark(#e8e8e8, #292929);
-            padding: 0.35rem;
+            background-color: light-dark(#f5f5f5, #293141);
+            padding: 0.75rem;
             overflow-wrap: break-word;
         }
 
-        .msg-id {
-            display: inline;
-            margin-right: 4px;
-        }
-        
-        time {
-            display: inline;
-            margin-right: 4px;
+        .msg-metadata {
+            font-size: 13px;
+            font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+            color: light-dark(#596b9e, #9096a1);
         }
 
+        .msg-id, time {
+            display: inline;
+            margin-right: 6px;
+        }
+        
         .msg-text {
             display: inline;
-            color: light-dark(#2c2c2c, #c0c0c0);
+            color: light-dark(#243360, #d5d5d5);
+            font-size: 16px;
         }
 
         .msg-addedby {
             display: block;
             margin-top: 4px;
-
+            color: light-dark(#596b9e, #9096a1);
             font-size: 12px;
         }
         
         .adder-name {
+            color: light-dark(#3f5696, #9fa3b7);
             font-weight: 600;
         }
         
